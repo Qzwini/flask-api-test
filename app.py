@@ -1,7 +1,7 @@
-from flask import Flask, jsonify, request #import objects from the Flask model
-app = Flask(__name__) #define app using Flask
+from flask import Flask, jsonify, request
+app = Flask(__name__)
 
-languages = [{'name' : 'Python'}, {'name' : 'FLask'}, {'name' : 'Django'}, {'name' : 'C++'}]
+languages = [{'name' : 'Python'}, {'name' : 'FLask'}, {'name' : 'Django'}, {'name' : 'JS'}]
 
 @app.route('/', methods=['GET'])
 def test():
@@ -29,6 +29,12 @@ def editOne(name):
     langs[0]['name'] = request.json['name']
     return jsonify({'language' : langs[0]})
 
+
+@app.route('/lang/<string:name>', methods=['DELETE'])
+def removeOne(name):
+    langs = [language for language in languages if language['name'] == name]
+    languages.remove(langs[0])
+    return jsonify({'languages' : languages})
 
 
 if __name__ == '__main__':
